@@ -1,6 +1,7 @@
 const fs = require('fs')
 const https = require('https')
 const express = require('express')
+const cors = require('cors')
 const mongoose = require('mongoose')
 const helmet = require('helmet')
 const bodyParser = require('body-parser')
@@ -16,6 +17,7 @@ const { parseDomain, ParseResultType } = require("parse-domain");
 mongoose.Promise = bluebird
 mongoose.connect(config.mongo.url)
 
+app.use(cors())
 app.use(helmet())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
