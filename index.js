@@ -1,3 +1,5 @@
+const fs = require('fs')
+const https = require('https')
 const express = require('express')
 const mongoose = require('mongoose')
 const helmet = require('helmet')
@@ -45,8 +47,12 @@ app.use((req, res, next)=>{
 
 app.use('/', routes)
 
+const httpsServer = https.createServer({
+  key: fs.readFileSync('./certs/private.key.pem'),
+  cert: fs.readFileSync('./certs/domain.cert.pem'),
+},app);
 
-app.listen(config.server.port, () => {
+httpsServer.listen(config.server.port, () => {
   console.log(`Magic happens on port ${config.server.port}`)
 })
 
